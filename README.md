@@ -23,7 +23,7 @@ Systems Administration project
 * Students don't have to waste private repoitories to work on assignments.
 * If a student fails to complete an assignment, they can be awarded partial marks (as their work exist in the repository).Students don't have to upload assignments after completing them.Hence,no cases of 'forgetting to upload' or 'deadline extensions because of time taken to compress submission'.
 * Instructor is the admin : controls all the push requests.Can enforce structural conditions on submissions to make it easier to check them.Can ignore push requests after deadline expires.
-* Thi,s along with scripts, makes it easier to compile assignments for checking to be done by the TAs.The system can be automated to compress submissions into groups and automatically mailing to the TAs , hence saving time spent by TAs in downloading submissions individually and then checking them (uncompressing them as well :p ).
+* This along with scripts, makes it easier to compile assignments for checking to be done by the TAs.The system can be automated to compress submissions into groups and automatically mailing to the TAs , hence saving time spent by TAs in downloading submissions individually and then checking them (uncompressing them as well :p ).
 
 ## Reasons for chosing Gogs over other local git servers 
 
