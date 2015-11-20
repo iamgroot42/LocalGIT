@@ -31,3 +31,12 @@ Systems Administration project
 * Support for dockers (just one package,run with just a single command).
 * Support for dockers.
 * Negligible resource usage (minimum 8MB RAM and one core CPU required).
+
+
+##Setting it up
+
+* Download the repo from https://github.com/iamgroot42/gogs
+* Navigate into the folder and run ```go build```
+* Set up server ```./gogs web```
+* Move the githook into the hooks folder of the repo and test it once.
+* If successful, modify it to compare directory structure with predefined structure (to make submissions easier to check for TAs).
