@@ -8,8 +8,9 @@ import datetime
 g=open('~/gogs-repositories/deadline','r')
 now=datetime.datetime.now()
 x=g.readline()
+#Read deadline for this assignment from file
 if(x<g) print"\nDeadline Passed\n"
-#Abort the push
+#Abort the push if deadline passed
   sys.exit(1)
 
 # Read in each ref that the user is trying to update

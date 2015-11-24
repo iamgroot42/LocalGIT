@@ -26,7 +26,7 @@ if(choice=='y' or choice=='Y'):
 	#Read from file of users	
 	#Create repository <name> for each user in the list by the name 
 	#Add pre-push hooks to each initialized repo
-	#Add compression script to crotab 
+	#Add compression script using at command : http://www.computerhope.com/unix/uat.htm
 	print("Deadline created!")
 else:
   print("Deadline not created")	
