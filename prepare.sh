@@ -2,44 +2,50 @@
 #works with command line arguments
 #./sascript.sh /home/mansi/github 2
 SHELL=/bin/sh
-DIR=$1/*/
-n=$2
-count=0
+FILENAME=$1/potato.txt
+FOLDER=$2
+n=$3
+count=1
 check=1
 DIRZ=~/Desktop/zipped
-echo "n is $2"
+echo "n is $3"
 echo "directory is $1"
+declare -a var
 mkdir $DIRZ
-mkdir $DIRZ/1
 FILE=$check.tar.gz.
-for f in $DIR
+cat $FILENAME | while read LINE
 do
-	echo "directory is $f"
-	if [ $count -lt $n ]; 
+	echo "directory is $LINE"
+	if [ $count -le $n ]; 
 	then
-		cp -avr $f $DIRZ/$check
+		#cp -avr $f $DIRZ/$check
+		var[$count]=$LINE
 		count=$((count+1))
 	else	 
-		count=0
+		count=1
+		# mkdir $DIRZ/$check
+		tar -cvzf $DIRZ/$check.tar $FILENAME/${var[*]}/$FOLDER
+		echo "compressed"
 		check=$((check+1))
-		mkdir $DIRZ/$check
-		cp -avr $f $DIRZ/$check
+		unset var
+		declare -a var
+		var[$count]=$LINE
 		count=$((count+1))
 	fi
-	
+# let count++
+echo "$LINE"
 done
-count=1
-for f in $DIRZ/*/
-do
-		tar -cvzf $DIRZ/$count.tar $f
-		count=$((count+1))
+
+if [ $count -gt 1]]
+then
+		tar -cvzf $DIRZ/$check.tar $FILENAME/${var[*]}/$FOLDER
+		# count=$((count+1))
 		echo "compressed" 
-done
+fi
 
-
-for f in $DIRZ/*/
-do
-		rm -rf $f
-		echo "deleted" 
-done
-
+echo "--------ALL DONE----------"
+# for f in $DIRZ/*/
+# do
+# 		rm -rf $f
+# 		echo "deleted" 
+# done
