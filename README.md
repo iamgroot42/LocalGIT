@@ -44,3 +44,8 @@ Systems Administration project
 cd folderA
 git init --bare
 git clone --bare folderA 2014021_lab10.git
+
+-> No need to modify gogs,master branch updated
+-> API modified for adding repos as admin via CLI
+
+@Unknwon rocks *_*
