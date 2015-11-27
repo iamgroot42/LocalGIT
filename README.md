@@ -9,10 +9,8 @@ Systems Administration project
 
 * [?]Setting up docker.
 * Setting up Gogs.
-* [?]Script to back up repositories every now and then (defined by user).Not really required,as data is stored on local server.
-* Server side git-hook to reject push requests after deadline expires.
-* [?]Server side hook to reject push requests if format of files is changed.
-* Script to zip compress repositories and send compressed sets of assignments to teaching assistants randomly via email (saving the hassle of TAs opening database and manually downloading assignments to check).
+* [done]Server side git-hook to reject push requests after deadline expires.
+* [done]Script to zip compress repositories and make compressed sets of assignments.
 
 ## Reasons for using a local git server :
 
@@ -39,15 +37,15 @@ Systems Administration project
 * Move the githook into the hooks folder of the repo and test it once.
 * If successful, modify it to compare directory structure with predefined structure (to make submissions easier to check for TAs).
 
-### Useful commands : 
-
-cd folderA
-git init --bare
-git clone --bare folderA 2014021_lab10.git
-
 -> No need to modify gogs,master branch updated
 -> API modified for adding repos as admin via CLI
 
 @Unknwon rocks *_*
 
 GET /repos/:username/:reponame/archive/:ref:format , ref=name of commit(opt), format=.tar.gz
+
+TODO : 
+* Check scripts on updated gogs
+* Figure out why POST/GET requests don't work via CTL/Python
+* Find a way to include githooks while migrating/ add them manually (stupid)
+* UI tweaks

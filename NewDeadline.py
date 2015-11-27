@@ -41,18 +41,19 @@ if(choice=='y' or choice=='Y'):
 		line=line.rstrip('\n')
 		userid=line.split(' ')[1]
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
-		r=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
-		try:
-			assert(r.status_code/100==2) #2xx return code <-> Success
-		except:
-			print "Error initializing data into users' repositories"
-			exit()
+		# r=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
+		# try:
+		# 	assert(r.status_code/100==2) #2xx return code <-> Success
+		# except:
+		# 	print "Error initializing data into users' repositories"
+		# 	exit()
 	f=open(reponame+'_deadline','w')
 	f.write(timex.strftime("%Y-%m-%d %H:%M"))
 	f.close()
 	print("Deadline job created!")
 	# Change this to deadline time + 5 minutes :
 	automation="at "+time[3]+":"+time[4]+" "+time[1]+"/"+time[0]+"/"+time[2]
+	# Fix error with folowing line 
 	automation+=" << "+"bash prepare.sh"
 	os.system(automation)
 else:
