@@ -47,7 +47,11 @@ if(choice=='y' or choice=='Y'):
 		except:
 			print "Error initializing data into users' repositories"
 			exit()
-	print("Deadline created!")
+	f=open(reponame+'_deadline','w')
+	f.write(timex.strftime("%Y-%m-%d %H:%M"))
+	f.close()
+	print("Deadline job created!")
+	# Change this to deadline time + 5 minutes :
 	automation="at "+time[3]+":"+time[4]+" "+time[1]+"/"+time[0]+"/"+time[2]
 	automation+=" << "+"bash prepare.sh"
 	os.system(automation)

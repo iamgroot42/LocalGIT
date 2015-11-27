@@ -22,4 +22,6 @@ for line in f:
 		print "Error. (Might be because of username : "+line+")"
 		break
 
+f.close()
+g.close()
 print "Output file generated!"
