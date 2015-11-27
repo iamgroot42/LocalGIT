@@ -49,3 +49,5 @@ git clone --bare folderA 2014021_lab10.git
 -> API modified for adding repos as admin via CLI
 
 @Unknwon rocks *_*
+
+GET /repos/:username/:reponame/archive/:ref:format , ref=name of commit(opt), format=.tar.gz
