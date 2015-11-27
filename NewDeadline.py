@@ -10,8 +10,7 @@ try:
 except:
 	print "Too few arguments (Provide port)"
 	exit()
-
-# course=raw_input("Enter course code") 
+ 
 link=raw_input("Enter clone URL (HTTPS/SSH) of deadline-repository\n")
 #Extracting name of repo from link :
 reponame=link.split('/')[-1].split('.git')[0] 
@@ -41,9 +40,16 @@ if(choice=='y' or choice=='Y'):
 	for line in f:
 		line=line.rstrip('\n')
 		userid=line.split(' ')[1]
-		#Add compression script using 'at' command : http://www.computerhope.com/unix/uat.htm
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
 		r=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
+		try:
+			assert(r.status_code/100==2) #2xx return code <-> Success
+		except:
+			print "Error initializing data into users' repositories"
+			exit()
 	print("Deadline created!")
+	automation="at "+time[3]+":"+time[4]+" "+time[1]+"/"+time[0]+"/"+time[2]
+	automation+=" << "+"bash prepare.sh"
+	os.system(automation)
 else:
   print("Deadline not created")	
