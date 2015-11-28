@@ -13,7 +13,7 @@ except:
  
 link=raw_input("Enter clone URL (HTTPS/SSH) of deadline-repository\n")
 #Extracting name of repo from link :
-reponame=link.split('/')[-1].split('.git')[0] 
+reponame=link.split(os.sep)[-1].split('.git')[0] 
 path=os.path.abspath(os.getcwd())
 
 while True:
@@ -39,7 +39,13 @@ if(choice=='y' or choice=='Y'):
 		exit()
 	for line in f:
 		line=line.rstrip('\n')
-		userid=line.split(' ')[1]
+		name,userid=line.split(' ')
+		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"somethinghook"
+		source_path="githook"
+		#Copy githook :
+		os.system("cp "+source_path+" "+dest_path)
+		#Remove corresponding sample hook
+		os.system("rm "+dest_path+".sample")
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
 		# r=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
 		# try:
@@ -47,14 +53,15 @@ if(choice=='y' or choice=='Y'):
 		# except:
 		# 	print "Error initializing data into users' repositories"
 		# 	exit()
+
 	f=open(reponame+'_deadline','w')
 	f.write(timex.strftime("%Y-%m-%d %H:%M"))
 	f.close()
 	print("Deadline job created!")
 	# Change this to deadline time + 5 minutes :
-	automation="at "+time[3]+":"+time[4]+" "+time[1]+"/"+time[0]+"/"+time[2]
+	at_time="at "+time[3]+":"+time[4]+" "+time[1]+"/"+time[0]+"/"+time[2]
 	# Fix error with folowing line 
-	automation+=" << "+"bash prepare.sh"
+	automation="bash prepare.sh"+" | "+at_time
 	os.system(automation)
 else:
   print("Deadline not created")	

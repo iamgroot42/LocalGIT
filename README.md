@@ -47,5 +47,4 @@ GET /repos/:username/:reponame/archive/:ref:format , ref=name of commit(opt), fo
 TODO : 
 * Check scripts on updated gogs
 * Figure out why POST/GET requests don't work via CTL/Python
-* Find a way to include githooks while migrating/ add them manually (stupid)
 * UI tweaks
