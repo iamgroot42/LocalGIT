@@ -8,13 +8,21 @@ import urllib
 import getpass
 
 try:
+	f=open('config','r')
+	username=f.readline().rstrip()
+	username=username.split(':')[1]
+	password=f.readline().rstrip()
+	password=password.split(':')[1]
+	f.close()
+except:
+	print "Configuration file not found"
+	exit()
+
+try:
 	port=sys.argv[1]
 except:
 	print "Too few arguments (Provide port)"
 	exit()
-
-username=raw_input("Enter username : ")
-password=getpass.getpass("Enter password : ")
 
 # Prepare session
 s = requests.Session()
@@ -24,7 +32,6 @@ lang=urllib.unquote(r.cookies['lang']).decode('utf8')
 csrf=urllib.unquote(r.cookies['_csrf']).decode('utf8')
 dicto={"user_name":username, "password":password ,"_csrf":csrf}
 r2=s.post("http://localhost:3000/user/login",data=dicto)
-print r2
 
 link=raw_input("Enter clone URL (HTTPS/SSH) of deadline-repository\n")
 #Extracting name of repo from link :
