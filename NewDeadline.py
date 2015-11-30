@@ -4,13 +4,26 @@ import requests
 import re
 import json
 import sys
+import urllib 
 
 try:
 	port=sys.argv[1]
 except:
 	print "Too few arguments (Provide port)"
 	exit()
- 
+
+username=raw_input("Enter username")
+password=raw_input("Enter password")
+
+# Prepare session
+s = requests.Session()
+r=s.get("http://localhost:3000/user/login");
+i_like_gogits=urllib.unquote(r.cookies['i_like_gogits']).decode('utf8')
+lang=urllib.unquote(r.cookies['lang']).decode('utf8')
+csrf=urllib.unquote(r.cookies['_csrf']).decode('utf8')
+dicto={"user_name":username, "password":password ,"_csrf":csrf}
+r2=s.post("http://localhost:3000/user/login",data=dicto)
+
 link=raw_input("Enter clone URL (HTTPS/SSH) of deadline-repository\n")
 #Extracting name of repo from link :
 reponame=link.split(os.sep)[-1].split('.git')[0] 
@@ -47,12 +60,15 @@ if(choice=='y' or choice=='Y'):
 		#Remove corresponding sample hook
 		os.system("rm "+dest_path+".sample")
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
-		# r=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
-		# try:
-		# 	assert(r.status_code/100==2) #2xx return code <-> Success
-		# except:
-		# 	print "Error initializing data into users' repositories"
-		# 	exit()
+		r2=s.post("http://localhost:3000/user/login",data=dicto)
+		csrf=urllib.unquote(r2.cookies['_csrf']).decode('utf8')
+		wololo={'_csrf':csrf,'i_like_gogits':i_like_gogits,'lang':lang}
+		r3=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
+		try:
+			assert(r3.status_code/100==2) #2xx return code <-> Success
+		except:
+			print "Error initializing data into users' repositories"
+			exit()
 
 	f=open(reponame+'_deadline','w')
 	f.write(timex.strftime("%Y-%m-%d %H:%M"))
