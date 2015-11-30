@@ -20,7 +20,7 @@ deadline=datetime.datetime.strptime(f.readline(),'%Y-%m-%d %H:%M')
 f.close()
 now=datetime.datetime.now()
 #Read deadline for this assignment from file
-if(now<deadline):
+if(now>deadline):
 	print"\nDeadline Passed!\n"
 	sys.exit(1)
 
