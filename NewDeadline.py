@@ -5,6 +5,7 @@ import re
 import json
 import sys
 import urllib 
+import getpass
 
 try:
 	port=sys.argv[1]
@@ -12,8 +13,8 @@ except:
 	print "Too few arguments (Provide port)"
 	exit()
 
-username=raw_input("Enter username")
-password=raw_input("Enter password")
+username=raw_input("Enter username : ")
+password=getpass.getpass("Enter password : ")
 
 # Prepare session
 s = requests.Session()
@@ -23,6 +24,7 @@ lang=urllib.unquote(r.cookies['lang']).decode('utf8')
 csrf=urllib.unquote(r.cookies['_csrf']).decode('utf8')
 dicto={"user_name":username, "password":password ,"_csrf":csrf}
 r2=s.post("http://localhost:3000/user/login",data=dicto)
+print r2
 
 link=raw_input("Enter clone URL (HTTPS/SSH) of deadline-repository\n")
 #Extracting name of repo from link :
@@ -53,22 +55,25 @@ if(choice=='y' or choice=='Y'):
 	for line in f:
 		line=line.rstrip('\n')
 		name,userid=line.split(' ')
-		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"somethinghook"
+		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"pre-push"
 		source_path="githook"
 		#Copy githook :
-		os.system("cp "+source_path+" "+dest_path)
-		#Remove corresponding sample hook
-		os.system("rm "+dest_path+".sample")
+		print "SOURCE "+source_path
+		print "DEST "+dest_path
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
-		r2=s.post("http://localhost:3000/user/login",data=dicto)
-		csrf=urllib.unquote(r2.cookies['_csrf']).decode('utf8')
-		wololo={'_csrf':csrf,'i_like_gogits':i_like_gogits,'lang':lang}
-		r3=requests.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
+		print "http://localhost:"+port+"/api/v1/repos/migrate"
+		r3=s.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
 		try:
 			assert(r3.status_code/100==2) #2xx return code <-> Success
 		except:
 			print "Error initializing data into users' repositories"
 			exit()
+		os.system("cp "+source_path+" "+dest_path)
+		# Try Removing corresponding sample hook
+		try:
+			os.system("rm "+dest_path+".sample")
+		except:
+			print "Woohoo :("
 
 	f=open(reponame+'_deadline','w')
 	f.write(timex.strftime("%Y-%m-%d %H:%M"))
