@@ -65,10 +65,10 @@ if(choice=='y' or choice=='Y'):
 		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"pre-receive"
 		source_path="githook"
 		#Copy githook :
-		print "SOURCE "+source_path
-		print "DEST "+dest_path
+		# print "SOURCE "+source_path
+		# print "DEST "+dest_path
 		params={"clone_addr":link,"uid":userid,"repo_name":reponame,"private":"true"}
-		print "http://localhost:"+port+"/api/v1/repos/migrate"
+		# print "http://localhost:"+port+"/api/v1/repos/migrate"
 		r3=s.post("http://localhost:"+port+"/api/v1/repos/migrate", data = params)
 		try:
 			assert(r3.status_code/100==2) #2xx return code <-> Success
