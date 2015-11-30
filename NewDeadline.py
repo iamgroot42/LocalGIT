@@ -55,7 +55,7 @@ if(choice=='y' or choice=='Y'):
 	for line in f:
 		line=line.rstrip('\n')
 		name,userid=line.split(' ')
-		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"pre-push"
+		dest_path=name+os.sep+reponame+".git"+os.sep+"hooks"+os.sep+"pre-receive"
 		source_path="githook"
 		#Copy githook :
 		print "SOURCE "+source_path
@@ -69,12 +69,7 @@ if(choice=='y' or choice=='Y'):
 			print "Error initializing data into users' repositories"
 			exit()
 		os.system("cp "+source_path+" "+dest_path)
-		# Try Removing corresponding sample hook
-		try:
-			os.system("rm "+dest_path+".sample")
-		except:
-			print "Woohoo :("
-
+		os.system("chmod +x "+dest_path)
 	f=open(reponame+'_deadline','w')
 	f.write(timex.strftime("%Y-%m-%d %H:%M"))
 	f.close()
