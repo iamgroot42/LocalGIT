@@ -10,3 +10,5 @@ Systems Administration project
 * Run ```./gogs web``` for one-time setup
 * Create new deadlines by running ```python NewDeadline.py <port>``` , where port is the port on which the Gogs server is being run (usualy 3000)
 * Sit back and relax : any push requests after the deadline expires will be rejected.
+
+Special thanks to <a href="https://github.com/Unknwon"> Unknwon </a> for modifying Gogs to support admin migration for all users and support for more githooks. 
