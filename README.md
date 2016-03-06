@@ -1,4 +1,4 @@
-# LocalGIT
+# localGIT
 Systems Administration project (got 40/40 yay)
 
 A local GIT server that supports creating deadlines (with githooks).
